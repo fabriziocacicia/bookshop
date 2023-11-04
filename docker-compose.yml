@@ -16,4 +16,12 @@ services:
     container_name: bookshop_database
     restart: unless-stopped
     ports:
-      - 27017:27017
+      - 27017:27017  
+  
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8111:8081
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=database
