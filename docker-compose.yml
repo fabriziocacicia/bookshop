@@ -16,7 +16,9 @@ services:
     container_name: bookshop_database
     restart: unless-stopped
     ports:
-      - 27017:27017  
+      - 27017:27017
+    volumes:
+      - ./database/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
   
   mongo-express:
     image: mongo-express
