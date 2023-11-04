@@ -7,3 +7,11 @@ services:
     ports:
       - 5123:5123
     restart: always
+
+
+  database:
+    image: mongo:latest
+    container_name: bookshop_database
+    restart: unless-stopped
+    ports:
+      - 27017:27017
