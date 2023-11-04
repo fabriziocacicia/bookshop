@@ -10,6 +10,7 @@ _start_backend:
 
 _start_database:
 	$(DOCKER_COMPOSE) database
+	$(DOCKER_COMPOSE) mongo-express
 
 stop:
 	docker-compose down
