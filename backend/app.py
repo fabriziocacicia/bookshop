@@ -53,18 +53,12 @@ def getBooks():
     data = []
     
     for book in books:
-        item = {
-            '_id': str(book['_id']),
-            'title': book['title'],
-            'author': book['author'],
-            'year': book['year'],
-            'price': book['price'],
-        }
-        data.append(item)
+        book['_id'] = str(book['_id'])
+        data.append(book)
     
     return jsonify(
         status=True,
-        data=data
+        books=data
     )
 
 if __name__ == "__main__":
