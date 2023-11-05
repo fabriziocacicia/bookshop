@@ -1,4 +1,4 @@
-db = db.getSiblingDB("bookstore_db");
+db = db.getSiblingDB("bookshop_db");
 
 db.createCollection("books", {
     validator: {
