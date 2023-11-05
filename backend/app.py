@@ -28,12 +28,13 @@ def createBook():
         'year': data['year'],
         'price': data['price'],
     }
-    db.books.insert_one(book)
-
+    
+    insertOneResult = db.books.insert_one(book)
+    
     return jsonify(
-        status=True,
-        message='Book added successfully'
-    ), 201
+            status=True,
+            inserted_id=str(insertOneResult.inserted_id)
+    )
     
 @app.route('/book/<book_id>', methods=['GET'])
 def getBookById(book_id):
