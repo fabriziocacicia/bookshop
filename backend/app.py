@@ -41,7 +41,7 @@ def getBooks():
     
     for book in books:
         item = {
-            'id': str(book['_id']),
+            '_id': str(book['_id']),
             'title': book['title'],
             'author': book['author'],
             'year': book['year'],
