@@ -33,6 +33,26 @@ def createBook():
         status=True,
         message='Book added successfully'
     ), 201
+    
+@app.route('/books', methods=['GET'])
+def getBooks():
+    books = db.books.find()
+    data = []
+    
+    for book in books:
+        item = {
+            'id': str(book['_id']),
+            'title': book['title'],
+            'author': book['author'],
+            'year': book['year'],
+            'price': book['price'],
+        }
+        data.append(item)
+    
+    return jsonify(
+        status=True,
+        data=data
+    )
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5123))
