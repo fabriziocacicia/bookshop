@@ -34,6 +34,23 @@ def createBook():
         message='Book added successfully'
     ), 201
     
+@app.route('/book/<book_id>', methods=['GET'])
+def getBookById(book_id):
+    book = db.books.find_one(ObjectId(book_id))
+    
+    book = {
+        '_id': str(book['_id']),
+        'title': book['title'],
+        'author': book['author'],
+        'year': book['year'],
+        'price': book['price'],
+    }
+    
+    return jsonify(
+        status=True,
+        data=book
+    )
+        
 @app.route('/books', methods=['GET'])
 def getBooks():
     books = db.books.find()
