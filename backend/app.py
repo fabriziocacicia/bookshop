@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 
 MONGODB_URI = os.environ.get("MONGODB_ENDPOINT")
@@ -9,8 +9,11 @@ app.config["MONGO_URI"] = MONGODB_URI
 mongo = PyMongo(app)
 
 @app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def index():
+    return jsonify(
+        status=True,
+        message='Welcome to the Book Store!'
+    )
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5123))
