@@ -3,7 +3,10 @@ DOCKER_COMPOSE = docker-compose up -d
 rebuild:
 	docker-compose up -d --build
 
-start: _start_backend _start_database
+start: _start_frontend _start_backend _start_database
+
+_start_frontend:
+	$(DOCKER_COMPOSE) frontend
 
 _start_backend:
 	$(DOCKER_COMPOSE) backend
