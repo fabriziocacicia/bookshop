@@ -38,7 +38,7 @@ def createBook():
     
 @app.route('/book/<book_id>', methods=['GET'])
 def getBookById(book_id):
-    book = db.books.find_one(ObjectId(book_id))
+    book = db.books.find_one_or_404(ObjectId(book_id))
     
     book = {
         '_id': str(book['_id']),
