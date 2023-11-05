@@ -40,14 +40,8 @@ def createBook():
 def getBookById(book_id):
     book = db.books.find_one_or_404(ObjectId(book_id))
     
-    book = {
-        '_id': str(book['_id']),
-        'title': book['title'],
-        'author': book['author'],
-        'year': book['year'],
-        'price': book['price'],
-    }
-    
+    book['_id'] = str(book['_id'])
+
     return jsonify(
         status=True,
         data=book
