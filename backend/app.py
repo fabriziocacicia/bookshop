@@ -85,6 +85,24 @@ def updateBook(book_id):
         message='Book updated successfully',
         updated_book=updated_book,
     ), 200
+    
+    
+@app.route('/book/<book_id>', methods=['DELETE'])
+def deleteBook(book_id):
+    book_object_id = ObjectId(book_id)
+    
+    result = db.books.delete_one({'_id': book_object_id})
+    if result.deleted_count == 0:
+        return jsonify(
+            status='Error',
+            message='Book not found'
+        ), 404
+    
+    return jsonify(
+        status='OK',
+        message='Book deleted successfully',
+        deleted_book_id=book_id
+    ), 200
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5123))
