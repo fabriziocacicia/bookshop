@@ -7,6 +7,8 @@ MONGODB_URI = os.environ.get("MONGODB_ENDPOINT")
 app = Flask(__name__)
 app.config["MONGO_URI"] = MONGODB_URI
 mongo = PyMongo(app)
+db = mongo.db
+
 
 @app.route('/')
 def index():
@@ -14,6 +16,23 @@ def index():
         status=True,
         message='Welcome to the Book Store!'
     )
+    
+@app.route('/book', methods=['POST'])
+def createBook():
+    data = request.get_json(force=True)
+
+    book = {
+        'title': data['title'],
+        'author': data['author'],
+        'year': data['year'],
+        'price': data['price'],
+    }
+    db.books.insert_one(book)
+
+    return jsonify(
+        status=True,
+        message='Book added successfully'
+    ), 201
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5123))
