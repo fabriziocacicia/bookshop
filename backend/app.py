@@ -61,6 +61,31 @@ def getBooks():
         books=data
     )
 
+
+@app.route('/book/<book_id>', methods=['PUT'])
+def updateBook(book_id):
+    changes = request.get_json()
+
+    book_object_id = ObjectId(book_id)
+    
+    result = db.books.update_one({'_id': book_object_id}, {'$set': changes})
+    
+    if result.matched_count == 0:
+        return jsonify(
+            status=False,
+            message='Item not found'
+        ), 404
+    
+    updated_book = db.books.find_one({'_id': book_object_id})
+    updated_book['_id'] = str(updated_book['_id'])
+    
+
+    return jsonify(
+        status=True,
+        message='Book updated successfully',
+        updated_book=updated_book,
+    ), 200
+
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5123))
     app.run(debug=True, host='0.0.0.0', port=port)
