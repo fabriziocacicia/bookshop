@@ -3,6 +3,7 @@ import DeleteButton from './components/delete_button';
 import { useState } from 'react';
 import ConfirmBookDeletionModal from './components/confirm_book_deletion_modal';
 import EditButton from './components/edit_button';
+import { useNavigate } from "react-router-dom";
 
 
 const books = [
@@ -11,7 +12,7 @@ const books = [
     { _id: "3", title: 'book3', author: 'author', year: 2002, price: 40.5},
 ]
 
-function BookListItem({id, title, author, year, price, onClickDelete }: {id: string, title: string, author: string, year: number, price: number, onClickDelete: () => any}) {
+function BookListItem({id, title, author, year, price, onClickEdit, onClickDelete }: {id: string, title: string, author: string, year: number, price: number, onClickEdit: () => any, onClickDelete: () => any}) {
     return (
         <tr>
             <td>{id}</td>
@@ -20,7 +21,7 @@ function BookListItem({id, title, author, year, price, onClickDelete }: {id: str
             <td>{year}</td>
             <td>{price}€</td>
             <td>
-                <EditButton onClick={()=>{}} />
+                <EditButton onClick={onClickEdit} />
             </td>
             <td>
                 <DeleteButton onClick={onClickDelete} />
@@ -31,6 +32,8 @@ function BookListItem({id, title, author, year, price, onClickDelete }: {id: str
 
 
 export default function BooksListPage() {
+    const navigate = useNavigate();
+
     const [confirmBookDeletionModalShowState, setConfirmBookDeletionModalShowState] = useState<boolean>(false);
     const [bookToDeleteTitle, setbookToDeleteTitle] = useState<string>("")
 
@@ -40,9 +43,13 @@ export default function BooksListPage() {
         setConfirmBookDeletionModalShowState(true);
     };
 
+    const navigateToEditBookPage = (bookID: string) => {
+        navigate(`/book/${bookID}`);
+    }
+
 
     const listItems = books.map(book => 
-            <BookListItem key={book._id} id={book._id} title={book.title} author={book.author} year={book.year} price={book.price} onClickDelete={() => handleShowConfirmBookDeletionModal(book.title)}/>
+            <BookListItem key={book._id} id={book._id} title={book.title} author={book.author} year={book.year} price={book.price} onClickEdit={() => navigateToEditBookPage(book._id)} onClickDelete={() => handleShowConfirmBookDeletionModal(book.title)}/>
         );
         
     return (
