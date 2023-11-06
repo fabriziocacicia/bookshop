@@ -6,6 +6,9 @@ services:
     container_name: bookshop_frontend
     ports:
       - 8030:3000
+    volumes:
+      - /frontend/node_modules
+      - ./frontend:/frontend
 
   backend:
     build: ./backend
