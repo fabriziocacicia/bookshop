@@ -11,7 +11,7 @@ const books = [
     { _id: "3", title: 'book3', author: 'author', year: 2002, price: 40.5},
 ]
 
-function BookListItem({id, title, author, year, price, onClickDelete }: {id: string, title: string, author: string, year: number, price: number, onClickDelete: Function}) {
+function BookListItem({id, title, author, year, price, onClickDelete }: {id: string, title: string, author: string, year: number, price: number, onClickDelete: () => any}) {
     return (
         <tr>
             <td>{id}</td>
