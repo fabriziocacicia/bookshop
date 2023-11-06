@@ -2,6 +2,7 @@ import Table from 'react-bootstrap/Table';
 import DeleteButton from './components/delete_button';
 import { useState } from 'react';
 import ConfirmBookDeletionModal from './components/confirm_book_deletion_modal';
+import EditButton from './components/edit_button';
 
 
 const books = [
@@ -18,6 +19,9 @@ function BookListItem({id, title, author, year, price, onClickDelete }: {id: str
             <td>{author}</td>
             <td>{year}</td>
             <td>{price}€</td>
+            <td>
+                <EditButton onClick={()=>{}} />
+            </td>
             <td>
                 <DeleteButton onClick={onClickDelete} />
             </td>
@@ -52,6 +56,7 @@ export default function BooksListPage() {
                         <th>Author</th>
                         <th>Year</th>
                         <th>Price</th>
+                        <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
