@@ -57,9 +57,8 @@ def getBooks():
         data.append(book)
     
     return jsonify(
-        status=True,
         books=data
-    )
+    ), 200
 
 
 @app.route('/book/<book_id>', methods=['PUT'])
