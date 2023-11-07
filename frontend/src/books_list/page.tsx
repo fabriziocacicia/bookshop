@@ -72,7 +72,7 @@ export default function BooksListPage() {
 
 
     const listItems = books.map(book => 
-            <BookListItem key={book.id} id={book.id} title={book.title} author={book.author} year={book.year} price={book.price} onClickEdit={() => navigateToEditBookPage(book._id)} onClickDelete={() => handleShowConfirmBookDeletionModal(book.title)}/>
+            <BookListItem key={book.id} id={book.id} title={book.title} author={book.author} year={book.year} price={book.price} onClickEdit={() => navigateToEditBookPage(book.id)} onClickDelete={() => handleShowConfirmBookDeletionModal(book.title)}/>
         );
         
     return (
