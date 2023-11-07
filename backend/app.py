@@ -50,6 +50,7 @@ def getBookById(book_id):
     )
         
 @app.route('/books', methods=['GET'])
+@cross_origin()
 def getBooks():
     books = db.books.find()
     data = []
@@ -89,6 +90,7 @@ def updateBook(book_id):
     
     
 @app.route('/book/<book_id>', methods=['DELETE'])
+@cross_origin()
 def deleteBook(book_id):
     book_object_id = ObjectId(book_id)
     
