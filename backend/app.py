@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from flask_cors import CORS, cross_origin
 
 MONGODB_URI = os.environ.get("MONGODB_ENDPOINT")
 
@@ -10,6 +11,7 @@ app.config["MONGO_URI"] = MONGODB_URI
 mongo = PyMongo(app)
 db = mongo.db
 
+CORS(app)
 
 @app.route('/')
 def index():
