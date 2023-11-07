@@ -1,6 +1,5 @@
 import Table from 'react-bootstrap/Table';
 import { useEffect, useState } from 'react';
-import ConfirmBookDeletionModal from './components/confirm_book_deletion_modal';
 import { useNavigate } from "react-router-dom";
 import Book from '../commons/models/book';
 import BooksRepository from '../commons/repositories/books_repository';
@@ -12,14 +11,14 @@ export default function BooksListPage() {
 
     const [books, setBooks] = useState<Book[]>([]);
 
-    const [confirmBookDeletionModalShowState, setConfirmBookDeletionModalShowState] = useState<boolean>(false);
-    const [bookToDeleteTitle, setbookToDeleteTitle] = useState<string>("")
 
-    const handleCloseConfirmBookDeletionModal = () => setConfirmBookDeletionModalShowState(false);
-    const handleShowConfirmBookDeletionModal = (bookTitle: string) => {
-        setbookToDeleteTitle(bookTitle);
-        setConfirmBookDeletionModalShowState(true);
-    };
+    const handleDeleteBook = async (bookID: string) => {
+        const response: Response = await BooksRepository.deleteBook(bookID);
+
+        if (response.ok) {
+            navigate(0);
+        }
+    }
 
     const navigateToEditBookPage = (bookID: string) => {
         navigate(`/book/${bookID}`);
@@ -44,12 +43,12 @@ export default function BooksListPage() {
 
 
     const listItems = books.map(book => 
-            <BookListItem key={book.id} id={book.id} title={book.title} author={book.author} year={book.year} price={book.price} onClickEdit={() => navigateToEditBookPage(book.id)} onClickDelete={() => handleShowConfirmBookDeletionModal(book.title)}/>
+            <BookListItem key={book.id} id={book.id} title={book.title} author={book.author} year={book.year} price={book.price} onClickEdit={() => navigateToEditBookPage(book.id)} onClickDelete={() => handleDeleteBook(book.id)}/>
         );
         
     return (
         <>  
-            <ConfirmBookDeletionModal bookTitle={bookToDeleteTitle} show={confirmBookDeletionModalShowState} onHide={handleCloseConfirmBookDeletionModal} onClickCancel={handleCloseConfirmBookDeletionModal} onClickDelete={()=>{}}/>
+            
             <Table responsive>
                 <thead>
                     <tr>

@@ -5,4 +5,10 @@ export default class BooksProvider {
     public static async getBooks(): Promise<Response> {
         return fetch(`${BooksProvider.BACKEND_ENDPOINT}/books`);
     }
+
+    public static async deleteBook(bookID: string): Promise<Response> {
+        return fetch(`${BooksProvider.BACKEND_ENDPOINT}/book/${bookID}`, {
+            method: "DELETE",
+        });
+    }
 }

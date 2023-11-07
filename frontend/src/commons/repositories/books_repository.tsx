@@ -20,4 +20,7 @@ export default class BooksRepository {
         return books;
     }
     
+    public static async deleteBook(bookID: string): Promise<Response> {
+        return BooksProvider.deleteBook(bookID);
+    }
 }
