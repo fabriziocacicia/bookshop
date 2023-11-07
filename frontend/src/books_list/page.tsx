@@ -1,30 +1,10 @@
 import Table from 'react-bootstrap/Table';
-import DeleteButton from './components/delete_button';
 import { useEffect, useState } from 'react';
 import ConfirmBookDeletionModal from './components/confirm_book_deletion_modal';
-import EditButton from './components/edit_button';
 import { useNavigate } from "react-router-dom";
 import Book from '../commons/models/book';
 import BooksRepository from '../commons/repositories/books_repository';
-
-
-function BookListItem({id, title, author, year, price, onClickEdit, onClickDelete }: {id: string, title: string, author: string, year: number, price: number, onClickEdit: () => any, onClickDelete: () => any}) {
-    return (
-        <tr>
-            <td>{id}</td>
-            <td>{title}</td>
-            <td>{author}</td>
-            <td>{year}</td>
-            <td>{price}€</td>
-            <td>
-                <EditButton onClick={onClickEdit} />
-            </td>
-            <td>
-                <DeleteButton onClick={onClickDelete} />
-            </td>
-        </tr> 
-    );
-}
+import BookListItem from './components/book_list_item';
 
 
 export default function BooksListPage() {
