@@ -5,6 +5,7 @@ import ConfirmBookDeletionModal from './components/confirm_book_deletion_modal';
 import EditButton from './components/edit_button';
 import { useNavigate } from "react-router-dom";
 import Book from '../commons/models/book';
+import BooksRepository from '../commons/repositories/books_repository';
 
 
 function BookListItem({id, title, author, year, price, onClickEdit, onClickDelete }: {id: string, title: string, author: string, year: number, price: number, onClickEdit: () => any, onClickDelete: () => any}) {
@@ -46,25 +47,16 @@ export default function BooksListPage() {
 
     useEffect(() => {
         async function fetchBooks() {
-            const response = await fetch(`http://localhost:5123/books`)
+            const response: Book[] | Response = await BooksRepository.getBooks();
 
-            if (!response.ok) {
+            if (response instanceof Response) {
                 const message = `An error has occurred: ${response.statusText}`;
                 window.alert(message);
                 return;
+            } else {
+                setBooks(response);
+                return
             }
-            const record = await response.json();
-            console.log(record)
-            console.log(record['books'])
-            
-            let parsedBooks: Book[] = []
-
-            for (let i in record['books']) {
-                parsedBooks.push(Book.fromJSON(record['books'][i]))
-            }
-            
-            console.log(parsedBooks)
-            setBooks(parsedBooks);
         }
 
         fetchBooks()
