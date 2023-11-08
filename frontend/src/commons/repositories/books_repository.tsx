@@ -23,4 +23,10 @@ export default class BooksRepository {
     public static async deleteBook(bookID: string): Promise<Response> {
         return BooksProvider.deleteBook(bookID);
     }
+
+    public static async addBook(book: Book): Promise<Response> {
+        const bookJSON = book.toJson();
+
+        return BooksProvider.addBook(bookJSON);
+    }
 }

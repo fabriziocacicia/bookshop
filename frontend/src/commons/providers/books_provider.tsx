@@ -11,4 +11,14 @@ export default class BooksProvider {
             method: "DELETE",
         });
     }
+
+    public static async addBook(bookJSON: any): Promise<Response> {
+        return fetch(`${BooksProvider.BACKEND_ENDPOINT}/book`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: bookJSON,
+        });
+    }
 }
