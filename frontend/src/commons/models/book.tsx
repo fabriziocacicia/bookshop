@@ -19,7 +19,6 @@ export default class Book  {
 
     toJson(): any {
         const jsonObject = {
-            id: this.id,
             title: this.title,
             author: this.author,
             year: this.year,

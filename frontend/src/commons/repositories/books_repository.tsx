@@ -43,4 +43,12 @@ export default class BooksRepository {
 
         return book;
     }
+
+    public static async editBook(book: Book): Promise<Response> {
+        if (book.id == undefined) {
+            throw new Error("It's not possible to edit a book without an ID");
+        } else {
+            return BooksProvider.editBook(book.id, book.toJson());
+        }
+    }
 }

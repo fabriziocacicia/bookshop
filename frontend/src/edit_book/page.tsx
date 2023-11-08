@@ -7,6 +7,8 @@ import { useParams } from "react-router";
 import BooksRepository from '../commons/repositories/books_repository';
 import { useNavigate } from 'react-router-dom';
 import Book from '../commons/models/book';
+import Loading from 'react-fullscreen-loading';
+import BookEditedModal from './components/book_edited_modal';
 
 
 export default function EditBookPage() {
@@ -14,11 +16,14 @@ export default function EditBookPage() {
     const bookID = params["id"];
 
     const navigate = useNavigate();
-
+    
     const [bookTitle, setBookTitle] = useState<string>("");
     const [bookAuthor, setBookAuthor] = useState<string>("");
     const [bookYear, setBookYear] = useState<number>(0);
     const [bookPrice, setBookPrice] = useState<number>(0);
+
+    const [loadingSpinnerShowState, setLoadingSpinnerShowState] = useState<boolean>(false);
+    const [bookEditedModalShowState, setBookEditedModalShowState] = useState<boolean>(false);
 
     useEffect(() => {
         async function fetchBook() {
@@ -62,18 +67,43 @@ export default function EditBookPage() {
         }
     }
 
-    function handleSubmit(event: SyntheticEvent) {
+    async function handleSubmit(event: SyntheticEvent) {
         event.preventDefault();
 
-        const book: Book = new Book({title: bookTitle, author: bookAuthor, year: bookYear, price: bookPrice});
+        const book: Book = new Book({id: bookID, title: bookTitle, author: bookAuthor, year: bookYear, price: bookPrice});
         
+        setLoadingSpinnerShowState(true);
+
+        const response: Response = await BooksRepository.editBook(book);
+
+        setLoadingSpinnerShowState(false);
+
+        if (response.ok) {
+            setBookEditedModalShowState(true);
+        }
+    }
+
+    function handleClickOkOnBookEditedModal() {
+        navigate('/');
     }
 
     return (
         <>  
+            <Loading loading={loadingSpinnerShowState} background="#00000055" loaderColor="#3498db" />
+            <BookEditedModal show={bookEditedModalShowState} onClickOK={handleClickOkOnBookEditedModal}/>
             <div style={{ margin: "40px 300px"}}>
                 <h1 style={{ margin: "40px"}}>Edit Book</h1>
                 <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3" as={Row}>
+                        <Form.Label column sm={2}>ID</Form.Label>
+                        <Col sm={10}>
+                            <Form.Control
+                                disabled
+                                readOnly
+                                value={bookID}
+                            />
+                        </Col>
+                    </Form.Group>
                     <Form.Group className="mb-3" as={Row} controlId="newBookFormTitle">
                         <Form.Label column sm={2}>Title</Form.Label>
                         <Col sm={10}>

@@ -27,4 +27,14 @@ export default class BooksProvider {
             method: "GET",
         })
     }
+
+    public static async editBook(bookID: string, bookJSON: any): Promise<Response> {
+        return fetch(`${BooksProvider.BACKEND_ENDPOINT}/book/${bookID}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: bookJSON,
+        })
+    }
 }
