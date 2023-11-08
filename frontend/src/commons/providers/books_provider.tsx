@@ -21,4 +21,10 @@ export default class BooksProvider {
             body: bookJSON,
         });
     }
+
+    public static async getBook(bookID: string): Promise<Response> {
+        return fetch(`${BooksProvider.BACKEND_ENDPOINT}/book/${bookID}`, {
+            method: "GET",
+        })
+    }
 }

@@ -29,4 +29,18 @@ export default class BooksRepository {
 
         return BooksProvider.addBook(bookJSON);
     }
+
+    public static async getBook(bookID: string): Promise<Book | Response> {
+        const response = await BooksProvider.getBook(bookID);
+
+        if (!response.ok) {
+            return response;
+        }
+
+        const record = await response.json();
+
+        const book = Book.fromJSON(record['data']);
+
+        return book;
+    }
 }
