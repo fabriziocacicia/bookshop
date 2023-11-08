@@ -34,9 +34,8 @@ def createBook():
     insertOneResult = db.books.insert_one(book)
     
     return jsonify(
-            status=True,
             inserted_id=str(insertOneResult.inserted_id)
-    )
+    ), 200
     
 @app.route('/book/<book_id>', methods=['GET'])
 def getBookById(book_id):
