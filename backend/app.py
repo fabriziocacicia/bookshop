@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 MONGODB_URI = os.environ.get("MONGODB_ENDPOINT")
 
@@ -50,7 +50,6 @@ def getBookById(book_id):
     )
         
 @app.route('/books', methods=['GET'])
-@cross_origin()
 def getBooks():
     books = db.books.find()
     data = []
@@ -90,7 +89,6 @@ def updateBook(book_id):
     
     
 @app.route('/book/<book_id>', methods=['DELETE'])
-@cross_origin()
 def deleteBook(book_id):
     book_object_id = ObjectId(book_id)
     
