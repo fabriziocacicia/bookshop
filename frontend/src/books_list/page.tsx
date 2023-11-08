@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import Book from '../commons/models/book';
 import BooksRepository from '../commons/repositories/books_repository';
 import BookListItem from './components/book_list_item';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 export default function BooksListPage() {
     const navigate = useNavigate();
 
-    const [books, setBooks] = useState<Book[]>([]);
+    const [books, setBooks] = useState<Book[]>();
+    var listItems: any[] = [];
 
 
     const handleDeleteBook = async (bookID: string) => {
@@ -42,31 +44,41 @@ export default function BooksListPage() {
     }, []);
 
 
-    const listItems = books.map(book => 
-            <BookListItem key={book.id} id={book.id} title={book.title} author={book.author} year={book.year} price={book.price} onClickEdit={() => navigateToEditBookPage(book.id)} onClickDelete={() => handleDeleteBook(book.id)}/>
+    if (books != undefined) {
+        listItems = books
+        .filter((book) => book.id != undefined)    
+        .map(book => 
+            <BookListItem key={book.id} id={book.id!} title={book.title} author={book.author} year={book.year} price={book.price} onClickEdit={() => navigateToEditBookPage(book.id!)} onClickDelete={() => handleDeleteBook(book.id!)}/>
         );
-        
+    }
+
     return (
         <>  
-            
-            <Table responsive>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Year</th>
-                        <th>Price</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {listItems}
-                </tbody>
-                
-            </Table>
-            {listItems.length == 0 ? "Nessun libro ancora presente" : null}
+            {
+                books == undefined ?
+                <Spinner animation="border" />
+                :
+                <>
+                <Table responsive>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Year</th>
+                            <th>Price</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {listItems}
+                    </tbody>
+                    
+                </Table>
+                {listItems.length == 0 ? "Nessun libro ancora presente" : null}
+                </>
+            }
         </>
     )
 }
