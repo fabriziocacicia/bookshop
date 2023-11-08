@@ -1,5 +1,5 @@
 export default class BooksProvider {
-    private static BACKEND_ENDPOINT: string = 'http://localhost:5123'
+    private static BACKEND_ENDPOINT: string = process.env.REACT_APP_BACKEND_ENDPOINT!;
 
 
     public static async getBooks(): Promise<Response> {
