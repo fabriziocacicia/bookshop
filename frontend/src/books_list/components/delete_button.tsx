@@ -1,4 +1,4 @@
-import IconButton from './icon_buton';
+import IconButton from './icon_button';
 
 export default function DeleteButton({ onClick }: { onClick: () => any }) {
     return (
