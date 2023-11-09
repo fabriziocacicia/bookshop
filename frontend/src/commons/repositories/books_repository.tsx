@@ -2,8 +2,8 @@ import Book from "../models/book";
 import BooksProvider from "../providers/books_provider";
 
 export default class BooksRepository {
-    public static async getBooks(): Promise<Book[] | Response> {
-        const response = await BooksProvider.getBooks();
+    public static async getBooks(queryParams: string = ""): Promise<Book[] | Response> {
+        const response = await BooksProvider.getBooks(queryParams);
 
         if (!response.ok) {
             return response;
