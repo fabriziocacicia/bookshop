@@ -51,4 +51,22 @@ export default class BooksRepository {
             return BooksProvider.editBook(book.id, book.toJson());
         }
     }
+
+    public static async aiSearch(searchQuery: string): Promise<Book[] | Response> {
+        const response = await BooksProvider.aiSearch(searchQuery);
+
+        if (!response.ok) {
+            return response;
+        }
+
+        const record = await response.json();
+
+        let books: Book[] = []
+
+        for (let i in record['books']) {
+            books.push(Book.fromJSON(record['books'][i]))
+        }
+
+        return books;
+    }
 }

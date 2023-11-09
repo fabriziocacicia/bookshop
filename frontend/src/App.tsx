@@ -12,6 +12,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<BooksListPage />}/>
         <Route exact path="/books" element={<BooksListPage />}/>
+        <Route exact path="/aisearch" element={<BooksListPage />}/>
         <Route exact path="/book" element={<AddBookPage />}/>
         <Route path="/book/:id" element={<EditBookPage />}/>
       </Routes>

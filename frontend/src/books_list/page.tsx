@@ -1,14 +1,34 @@
 import Table from 'react-bootstrap/Table';
 import { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Book from '../commons/models/book';
 import BooksRepository from '../commons/repositories/books_repository';
 import BookListItem from './components/book_list_item';
 import Spinner from 'react-bootstrap/Spinner';
+import AISearchModal from './components/ai_search_modal';
 
 
 export default function BooksListPage() {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const [searchModalShowState, setSearchModalShowState] = useState<boolean>(false);
+
+    function hideSearchModal() {
+        setSearchModalShowState(false);
+    }
+
+    async function handleSubmitAISearchQuery(searchQuery: string) {
+        const response = await BooksRepository.aiSearch(searchQuery);
+        
+        if (response instanceof Response) {
+            setBooks([]);
+        } else {
+            setBooks(response);
+        }
+
+        hideSearchModal();
+    }
 
     const [books, setBooks] = useState<Book[]>();
     var listItems: any[] = [];
@@ -22,8 +42,13 @@ export default function BooksListPage() {
         }
     }
 
-    const navigateToEditBookPage = (bookID: string) => {
+    function navigateToEditBookPage(bookID: string) {
         navigate(`/book/${bookID}`);
+    }
+
+
+    function isOnSearchPage(): boolean {
+        return location.pathname.includes("aisearch");
     }
 
     useEffect(() => {
@@ -40,8 +65,13 @@ export default function BooksListPage() {
             }
         }
 
-        fetchBooks()
-    }, []);
+        if (isOnSearchPage()) {
+            setSearchModalShowState(true);
+        } else {
+            setSearchModalShowState(false);
+            fetchBooks()
+        }  
+    }, [location]);
 
 
     if (books != undefined) {
@@ -54,7 +84,8 @@ export default function BooksListPage() {
 
     return (
         <>  
-            {
+            <AISearchModal show={searchModalShowState} onHide={hideSearchModal} onSubmit={handleSubmitAISearchQuery}/>
+            {   
                 books == undefined ?
                 <Spinner animation="border" />
                 :

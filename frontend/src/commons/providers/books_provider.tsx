@@ -37,4 +37,16 @@ export default class BooksProvider {
             body: bookJSON,
         })
     }
+
+    public static async aiSearch(searchQuery: string): Promise<Response> {
+        return fetch(`${BooksProvider.BACKEND_ENDPOINT}/aisearch`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "query": searchQuery
+            }),
+        });
+    }
 }
