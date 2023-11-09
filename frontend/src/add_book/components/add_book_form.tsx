@@ -13,7 +13,6 @@ export default function AddBookForm ({onSubmit}: {onSubmit: (book: Book) => void
 
     function handleFormControlChange(event: any): void {
         const formControlID: string = event.target.id;
-        console.log(event)
         switch(formControlID) {
             case "newBookFormTitle":
                 setBookTitle(event.target.value);
