@@ -107,7 +107,7 @@ export default function BooksListPage() {
                     </tbody>
                     
                 </Table>
-                {listItems.length == 0 ? "Nessun libro ancora presente" : null}
+                {listItems.length == 0 ? "No books yet" : null}
                 </>
             }
         </>
