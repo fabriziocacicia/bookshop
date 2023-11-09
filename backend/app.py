@@ -54,7 +54,9 @@ def getBookById(book_id):
         
 @app.route('/books', methods=['GET'])
 def getBooks():
-    books = db.books.find()
+    query = request.get_json(force=True, silent=True)
+    
+    books = db.books.find(query)
     data = []
     
     for book in books:
