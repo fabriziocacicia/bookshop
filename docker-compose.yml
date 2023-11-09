@@ -18,6 +18,8 @@ services:
     ports:
       - 5123:5123
     restart: always
+    volumes:
+      - ./backend:/app
     env_file:
       - .env
 
