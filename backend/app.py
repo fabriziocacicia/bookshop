@@ -56,7 +56,10 @@ def getBookById(book_id):
 def getBooks():
     query = request.get_json(force=True, silent=True)
     
-    books = db.books.find(query)
+    sort_by = request.args.get('sort', '_id')
+    order = int(request.args.get('ord', 1))
+    
+    books = db.books.find(query).sort(sort_by, order)
     data = []
     
     for book in books:
